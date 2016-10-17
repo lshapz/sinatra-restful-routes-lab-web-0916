@@ -36,7 +36,11 @@ class ApplicationController < Sinatra::Base
 
   get '/recipes/:id' do 
     @recipe = Recipe.find_by_id(params[:id])
-    erb :show
+    if Recipe.all.find_by_id(params[:id]) == nil
+      redirect to "/recipes/new"
+    else
+      erb :show
+    end 
   end 
 
 
@@ -65,7 +69,7 @@ class ApplicationController < Sinatra::Base
   post '/recipes' do 
     @recipe = Recipe.create(params)
     #binding.pry
-    redirect to "/recipes/#{@recipe.id}/"
+    redirect to "/recipes/#{@recipe.id}"
   end 
 
   # get '/recipes/:id/' do 
